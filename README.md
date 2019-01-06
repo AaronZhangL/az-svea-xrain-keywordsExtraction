@@ -1,5 +1,5 @@
 # az-svea-xrain-keywordsExtraction
-Keywords extraction web server
+Keywords extraction web API
 
 ### reference
 https://github.com/explosion/spacy-services
