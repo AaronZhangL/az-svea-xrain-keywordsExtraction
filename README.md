@@ -4,10 +4,12 @@ Keywords extraction web API
 ### reference
 https://github.com/explosion/spacy-services
 
+https://github.com/timothycrosley/hug
+
 ### How to generate requirements.txt file.
 Method 1:
 
-$ pip freeze > requirements.txt
+$ pip freeze > requirements-all.txt
 
 *Method 2:
 
