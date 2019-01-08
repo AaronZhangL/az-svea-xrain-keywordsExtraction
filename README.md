@@ -8,6 +8,8 @@ https://github.com/timothycrosley/hug
 
 https://github.com/explosion/spaCy
 
+https://spacy.io/models/
+
 ### How to generate requirements.txt file.
 Method 1:
 
