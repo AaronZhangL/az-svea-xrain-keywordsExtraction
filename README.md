@@ -6,6 +6,8 @@ https://github.com/explosion/spacy-services
 
 https://github.com/timothycrosley/hug
 
+https://github.com/explosion/spaCy
+
 ### How to generate requirements.txt file.
 Method 1:
 
