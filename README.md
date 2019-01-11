@@ -40,6 +40,9 @@ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0
 Serve one or more [spaCy models](https://spacy.io/models) and extract syntactic
 dependencies, part-of-speech tags and/or entities.
 
+# https://spacy.io/models/en#en_core_web_sm
+$ python -m spacy download en_core_web_sm
+
 ## Installation
 
 ```bash

@@ -24,19 +24,40 @@
 
 import sys
 import spacy
+from spacy.lang.en.examples import sentences
+
 # python -m spacy download en
 class KeyWords:
-	def __init__(self):
-		print("init KeyWords class")
-	
-	def splitSentence(self):
-		nlp = spacy.load('en')
-		doc = nlp(u"This is a sentence.")
-		print([(w.text, w.pos_) for w in doc])
-		
+  modelTuple = ("en", "en_core_web_sm")
+  
+  def __init__(self):
+    print("***AZ[Init KeyWords class]")
+
+  def splitSentenceEn(self):
+    nlp = spacy.load(self.modelTuple[0])
+    doc = nlp(u"This is a sentence.")
+    print([(w.text, w.pos_) for w in doc])
+
+  def splitSentenceEnCoreWebSm(self):
+    nlp = spacy.load(self.modelTuple[1])
+    doc = nlp(sentences[0])
+    print(doc.text)
+    for token in doc:
+      print(token.text, token.pos_, token.dep_)
+    
+  # python -m spacy download en_core_web_sm
+  def splitSentence(self, _modelType):
+    if _modelType == self.modelTuple[0]:
+      self.splitSentenceEn()
+    elif _modelType == self.modelTuple[1]:
+      self.splitSentenceEnCoreWebSm()
+    else:
+      print("No model be choosed!")
+
 def main(args):
     return 0
 
 if __name__ == '__main__':
-
-    sys.exit(main(sys.argv))
+    kw = KeyWords()
+    kw.splitSentence(_modelType=kw.modelTuple[1])
+    #sys.exit(main(sys.argv))
