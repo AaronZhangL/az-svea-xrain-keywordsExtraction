@@ -25,32 +25,35 @@
 import sys
 import spacy
 from spacy.lang.en.examples import sentences
+from svea_wikipediaManager import svea_wikipediaManager
 
-# python -m spacy download en
 class KeyWords:
   modelTuple = ("en", "en_core_web_sm")
   
   def __init__(self):
     print("***AZ[Init KeyWords class]")
-
-  def splitSentenceEn(self):
+    
+  # python -m spacy download en
+  def splitSentenceEn(self, _contentText):
     nlp = spacy.load(self.modelTuple[0])
-    doc = nlp(u"This is a sentence.")
+    #doc = nlp(u"This is a sentence.")
+    doc = nlp(_contentText)
     print([(w.text, w.pos_) for w in doc])
 
-  def splitSentenceEnCoreWebSm(self):
+  def splitSentenceEnCoreWebSm(self, _contentText):
     nlp = spacy.load(self.modelTuple[1])
-    doc = nlp(sentences[0])
+    doc = nlp(_contentText)
     print(doc.text)
     for token in doc:
       print(token.text, token.pos_, token.dep_)
     
   # python -m spacy download en_core_web_sm
-  def splitSentence(self, _modelType):
+  def splitSentence(self, _modelType, _contentText):
     if _modelType == self.modelTuple[0]:
-      self.splitSentenceEn()
+      self.splitSentenceEn(_contentText)
     elif _modelType == self.modelTuple[1]:
-      self.splitSentenceEnCoreWebSm()
+      _contentText = sentences[0]
+      self.splitSentenceEnCoreWebSm(_contentText)
     else:
       print("No model be choosed!")
 
@@ -58,6 +61,16 @@ def main(args):
     return 0
 
 if __name__ == '__main__':
+    # get text
+    wpMgr = svea_wikipediaManager()
+    content = wpMgr.svea_getTextByPageName("Customer-relationship_management")
     kw = KeyWords()
-    kw.splitSentence(_modelType=kw.modelTuple[1])
+    
+    # test 1
+    #kw.splitSentence(_modelType=kw.modelTuple[1])
+    
+    # test 2 intergrate wikpedia
+    kw.splitSentence(_modelType=kw.modelTuple[0], _contentText=content)
+    
+    
     #sys.exit(main(sys.argv))
