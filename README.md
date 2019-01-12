@@ -75,3 +75,29 @@ docker run \
     --volume=$HOME/neo4j/data:/data \
     --volume=$HOME/neo4j/logs:/logs \
     neo4j:3.0
+
+### start mutipl neo4j database
+Apparently in Community Edition you only have 1 database, so I used docker containers to create one server per db. Modify the ports + data volume as shown below:
+
+docker run \
+--rm \
+--publish=8474:7474 --publish=8687:7687 \
+--volume=$HOME/neo4j/data2:/data \
+--volume=$HOME/Downloads/neo4j/import:/var/lib/neo4j/import \
+--name=neo4j \
+--env NEO4J_AUTH=neo4j/password \
+neo4j:3.4
+
+
+# Defaults:
+# --publish=7474:7474 --publish=7687:7687 \
+# --volume=$HOME/neo4j/data:/data \
+
+## Init parameters before running svea_neo4jManager.py
+
+$ export NEO4J_USER="neo4j"
+$ export NEO4J_PASSWORD="my-password"
+$ export NEO4J_URI="bolt://xxx.xxx.xxx.xxx:7687"
+$ python svea_neo4jManager.py
+
+
