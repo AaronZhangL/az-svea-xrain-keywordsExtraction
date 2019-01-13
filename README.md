@@ -93,6 +93,12 @@ neo4j:3.4
 # --publish=7474:7474 --publish=7687:7687 \
 # --volume=$HOME/neo4j/data:/data \
 
+### neo4j cypher
+
+MATCH (n) RETURN n
+
+MATCH (n) DETACH DELETE n
+
 ## Init parameters before running svea_neo4jManager.py
 
 $ export NEO4J_USER="neo4j"

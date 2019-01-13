@@ -27,29 +27,39 @@ class svea_neo4jManager(object):
   def close(self):
     self._driver.close()
 
-  def print_greeting(self, message):
-    with self._driver.session() as session:
-      greeting = session.write_transaction(self._create_and_return_greeting, message)
-      
-  @staticmethod
-  def _create_and_return_greeting(tx, message):
-    result = tx.run("CREATE (a:Greeting) "
-                    "SET a.message = $message "
-                    "RETURN a.message + ', from node ' + id(a)", message=message)
-    return result.single()[0]
-    
-  def print_friends_of(self, tx, name):
-    for record in tx.run("MATCH (a:Person)-[:KNOWS]->(f) "
-                         "WHERE a.name = {name} "
-                         "RETURN f.name", name=name):
-      print(record["f.name"])
+  def read_all(self):
+    """Read all record.
 
-#def main(args):
-#    return 0
+    Args:
+      NONE
+    Raises:
+      OSError: If call some OS level lib failed.
+      ValueError: If the minimum port specified is less than 1024.
+    Returns:
+      The result of search Neo4J database.
+    """
+    try:
+      with self._driver.session() as session:
+        result = session.run("MATCH (n) RETURN n")
+        records = list(result)
+        print(len(records))
+        for record in records:
+          print(record["n"])
+        return result
+    except OSError as err:
+      print("OS error: {0}".format(err))
+    except ValueError:
+      print("Cannot get some value!")
+    except Exception as ex:
+      print(ex)
+      raise
+      
+def main(args):
+  return 0
 
 if __name__ == '__main__':
   n4Mgr = svea_neo4jManager(_uriEnvString="NEO4J_URI", _userEnvString="NEO4J_USER", _passwordEnvString="NEO4J_PASSWORD")
-  with n4Mgr._driver.session() as session:
-    session.write_transaction(n4Mgr._create_and_return_greeting, "aaron")
+  result = n4Mgr.read_all()
+    
   print("***main")
-  #sys.exit(main(sys.argv))
+  sys.exit(main(sys.argv))
