@@ -11,7 +11,7 @@ import spacy
 from spacy.lang.en.examples import sentences
 from svea_wikipediaManager import svea_wikipediaManager
 
-class KeyWords(object):
+class svea_analizeKeyWords(object):
   modelTuple = ("en", "en_core_web_sm")
   
   # POS words type list
@@ -31,7 +31,7 @@ class KeyWords(object):
   def splitSentenceEnCoreWebSm(self, _contentText):
     nlp = spacy.load(self.modelTuple[1])
     doc = nlp(_contentText)
-    print(doc.text)
+    #print(doc.text)
     for token in doc:
       print(token.text, token.pos_, token.dep_)
     return doc
@@ -41,9 +41,9 @@ class KeyWords(object):
   def getWordListOfSpecialWordType(self, _doc, _wordType):
     _nounDic = {}
     for token in _doc:
-      print(token.text, token.pos_, token.dep_)
+      #print(token.text, token.pos_, token.dep_)
       if (token.pos_ == "NOUN"):
-        _nounDic[token.text] = token.pos_
+        _nounDic[token.text] = [token.text, token.pos_, token.dep_]
     return _nounDic
 
   # python -m spacy download en_core_web_sm
@@ -73,19 +73,20 @@ if __name__ == '__main__':
     # get text
     wpMgr = svea_wikipediaManager()
     content = wpMgr.svea_getTextByPageName("Customer-relationship_management")
-    kw = KeyWords()
+    akdMgr = svea_analizeKeyWords()
     
     # test 1
-    #kw.splitSentence(_modelType=kw.modelTuple[1])
+    #akdMgr.splitSentence(_modelType=akdMgr.modelTuple[1])
     
     # test 2 intergrate wikpedia
-    #kw.splitSentence(_modelType=kw.modelTuple[0], _contentText=content)
+    #doc = akdMgr.splitSentence(_modelType=akdMgr.modelTuple[0], _contentText=content)
     
     # test 3 test file content
-    doc = kw.splitSentenceFromFile(_modelType=kw.modelTuple[0], _textFile="../../testData/textData1.txt")
+    doc = akdMgr.splitSentenceFromFile(_modelType=akdMgr.modelTuple[0], _textFile="../../testData/textData1.txt")
     
     # test 4: test word POS
-    nounDic = kw.getWordListOfSpecialWordType(_doc=doc, _wordType=kw.POS_NOUN)
+    nounDic = akdMgr.getWordListOfSpecialWordType(_doc=doc, _wordType=akdMgr.POS_NOUN)
     print("=======================================")
     print(nounDic)
-    #sys.exit(main(sys.argv))
+    
+    sys.exit(main(sys.argv))

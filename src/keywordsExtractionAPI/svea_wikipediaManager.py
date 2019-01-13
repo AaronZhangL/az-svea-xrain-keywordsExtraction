@@ -20,7 +20,6 @@ class svea_wikipediaManager(object):
     print(page.url)
     print(page.title)
     content = page.content # Content of page.
-    #print(content)
     return content
     
 def main(args):
@@ -28,6 +27,7 @@ def main(args):
 
 if __name__ == '__main__':
     wpMgr = svea_wikipediaManager()
-    wpMgr.svea_getTextByPageName("Customer-relationship_management")
+    content = wpMgr.svea_getTextByPageName("Customer-relationship_management")
+    print(content)
     
     #sys.exit(main(sys.argv))
