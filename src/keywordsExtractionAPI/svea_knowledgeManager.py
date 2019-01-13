@@ -21,10 +21,39 @@ class svea_knowledgeManager(object):
   
   def createKnowledgeDBwithWikipediaPage(self,_wikipediaPageName):
     try:
-      content = self.wpdMgr.svea_getTextByPageName(_wikipediaPageName)
-      doc = self.akwMgr.splitSentence(_modelType=self.akwMgr.modelTuple[0], _contentText=content)
+      # get wikipedia page instance
+      objWpp = self.wpdMgr.svea_getTextByPageName(_wikipediaPageName)
+      
+      # get NOUN words list
+      doc = self.akwMgr.splitSentence(_modelType=self.akwMgr.modelTuple[0], _contentText=objWpp.page.content)
+      
+      # get words pos dictionary
       nounDic = self.akwMgr.getWordListOfSpecialWordType(_doc=doc, _wordType=self.akwMgr.POS_NOUN)
-      self.neo4jMgr.addWordNode(nounDic)
+      
+      # Add titile node dictionary to neo4j
+      print("-------------------------------------------------------")
+      print("Add titile node dictionary to neo4j")
+      print("-------------------------------------------------------")
+      titleNode = {objWpp.page.title:[objWpp.page.title, "NOUN", "-"]}
+      titleNodeList = self.neo4jMgr.addWordNode(titleNode)
+      
+      # Add words dictionary to neo4j
+      print("-------------------------------------------------------")
+      print("Add words dictionary to neo4j")
+      print("-------------------------------------------------------")
+      nodeList = self.neo4jMgr.addWordNode(nounDic)
+      
+      # Create relationship between title node and normal word node
+      print("-------------------------------------------------------")
+      print("Create relationship between title node and normal word node")
+      print("-------------------------------------------------------")
+      for key, value in nounDic.items():
+        relationshipTypeList = self.neo4jMgr.createRelationship(titleNode[objWpp.page.title], value)
+        print(titleNode)
+        print(value)
+        print(relationshipTypeList)
+      print("***node list***")
+      print(nodeList)
       
     except Exception as ex:
       print(ex)

@@ -99,6 +99,25 @@ MATCH (n) RETURN n
 
 MATCH (n) DETACH DELETE n
 
+CREATE (n:Word {text:"Customer-relationship_management", pos:"NOUN", dep:"-"}) RETURN n
+
+MATCH (a:Word),(b:Word)
+WHERE a.text = 'References' AND b.text = 'Customer-relationship_management'
+CREATE (a)-[r:WIKIPEDIA_IN]->(b)
+RETURN type(r)
+
+MATCH (a:Word),(b:Word)
+WHERE a.text = 'References' AND b.text = 'Customer-relationship_management'
+RETURN a, b
+
+MATCH (b:Word)
+WHERE b.text = 'Customer-relationship_management'
+RETURN b
+
+MATCH (a:Word)
+WHERE a.text = 'References'
+RETURN a
+
 ## Init parameters before running svea_neo4jManager.py
 
 $ export NEO4J_USER="neo4j"

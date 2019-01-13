@@ -55,6 +55,15 @@ class svea_neo4jManager(object):
       raise
 
   def addWordNode(self, _wordNodes):
+    """Add words dictionary to neo4j
+
+    Args:
+      Words dictionary, format=> {'noun-word': ['noun-word', 'NOUN', 'dobj']}
+    Raises:
+      xxx: xxxxxxxxxxxxx
+    Returns:
+      Words list return from neo4j
+    """
     returnList = []
     with self._driver.session() as session:
       for key, value in _wordNodes.items():
@@ -71,7 +80,36 @@ class svea_neo4jManager(object):
                     "a.dep = $_dep "
                     "RETURN a", _text=_wordNode[0], _pos=_wordNode[1], _dep=_wordNode[2])
     return result.single()[0]
-        
+
+  def createRelationship(self, _titleNode, _wordNode):
+    """Create relationship between title node and word nodes.
+
+    Args:
+      Title words dictionary, format=> {'noun-word': ['noun-word', 'NOUN', 'dobj']}
+      Words dictionary, format=> {'noun-word': ['noun-word', 'NOUN', 'dobj']}
+    Raises:
+      xxx: xxxxxxxxxxxxx
+    Returns:
+      Words list return from neo4j, format => [<Node id=1992 labels={'Word'} properties={'pos': 'NOUN', 'text': 'References', 'dep': 'dobj'}>]
+    """
+    returnList = []
+    print(_titleNode, _wordNode)
+    with self._driver.session() as session:
+      relationshipType = session.write_transaction(self._createAndReturnWordNodeWithRelationship, _titleNode, _wordNode)
+      print(relationshipType)
+      returnList.append(relationshipType)
+    return returnList
+    
+  @staticmethod
+  def _createAndReturnWordNodeWithRelationship(tx, _titleNode, _wordNode):
+    #{'References': ['References', 'NOUN', 'dobj']}
+    result = tx.run("MATCH (a:Word),(b:Word) "
+                    "WHERE a.text = $_worldNode AND "
+                    "b.text = $_titleNode "
+                    "CREATE (a)-[r:WIKIPEDIA_IN]->(b)"
+                    "RETURN type(r)", _worldNode=_wordNode[0], _titleNode=_titleNode[0])
+    return result
+    
 def main(args):
   return 0
 
