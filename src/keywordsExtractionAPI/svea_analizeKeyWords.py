@@ -79,7 +79,7 @@ if __name__ == '__main__':
     #akdMgr.splitSentence(_modelType=akdMgr.modelTuple[1])
     
     # test 2 intergrate wikpedia
-    #doc = akdMgr.splitSentence(_modelType=akdMgr.modelTuple[0], _contentText=content)
+    #doc = akdMgr.splitSentenceEnCoreWebSm(_modelType=akdMgr.modelTuple[0], _contentText=content)
     
     # test 3 test file content
     doc = akdMgr.splitSentenceFromFile(_modelType=akdMgr.modelTuple[0], _textFile="../../testData/textData1.txt")

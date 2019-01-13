@@ -53,7 +53,25 @@ class svea_neo4jManager(object):
     except Exception as ex:
       print(ex)
       raise
-      
+
+  def addWordNode(self, _wordNodes):
+    returnList = []
+    with self._driver.session() as session:
+      for key, value in _wordNodes.items():
+        wordNode = session.write_transaction(self._createAndReturnWordNode, value)
+        print(wordNode)
+        returnList.append(wordNode)
+    return returnList
+
+  @staticmethod
+  def _createAndReturnWordNode(tx, _wordNode):
+    result = tx.run("CREATE (a:Word) "
+                    "SET a.text = $_text, "
+                    "a.pos = $_pos, "
+                    "a.dep = $_dep "
+                    "RETURN a", _text=_wordNode[0], _pos=_wordNode[1], _dep=_wordNode[2])
+    return result.single()[0]
+        
 def main(args):
   return 0
 
