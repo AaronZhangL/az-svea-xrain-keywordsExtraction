@@ -1,4 +1,6 @@
 waitress==1.1.0
-hug_middleware_cors==1.0.0
+wikipedia==1.4.0
+neo4j==1.7.1
 hug==2.4.1
+hug_middleware_cors==1.0.0
 spacy==2.0.18

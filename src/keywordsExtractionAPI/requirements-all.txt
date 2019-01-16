@@ -1,4 +1,5 @@
 asn1crypto==0.22.0
+astroid==2.1.0
 beautifulsoup4==4.7.1
 boto==2.49.0
 boto3==1.9.71
@@ -22,10 +23,13 @@ gensim==3.6.0
 hug==2.4.1
 hug-middleware-cors==1.0.0
 idna==2.6
+isort==4.3.4
 itsdangerous==1.1.0
 Jinja2==2.10
 jmespath==0.9.3
+lazy-object-proxy==1.3.1
 MarkupSafe==1.1.0
+mccabe==0.6.1
 msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1
@@ -40,6 +44,7 @@ plac==0.9.6
 preshed==2.0.1
 pycosat==0.6.3
 pycparser==2.18
+pylint==2.2.2
 pymongo==3.6.0
 pyOpenSSL==17.2.0
 PySocks==1.6.7
@@ -59,6 +64,7 @@ spacy==2.0.18
 thinc==6.12.1
 toolz==0.9.0
 tqdm==4.28.1
+typed-ast==1.1.1
 ujson==1.35
 urllib3==1.22
 waitress==1.1.0
