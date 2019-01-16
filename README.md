@@ -15,7 +15,7 @@ Method 1:
 
 $ pip freeze > requirements-all.txt
 
-*Method 2:
+Method 2:
 
 Use pipreqs - pipreqs used to generate requirements.txt file for any project based on imports
 
@@ -125,4 +125,9 @@ $ export NEO4J_PASSWORD="my-password"
 $ export NEO4J_URI="bolt://xxx.xxx.xxx.xxx:7687"
 $ python svea_neo4jManager.py
 
+## Install Jupter
 
+$ pip install jupyter
+
+### Start Jupter
+$ jupyter notebook
