@@ -47,9 +47,13 @@ def post_here(body):
 # return: "aaron - abcd!"
 @hug.get('/keywordsList')
 def keywordsList(content: str):
-    #keywordsList = keywords_list("debug","aaabbb")
-    newstr = "aaron"
-    return "{newstr} - {content}!".format(**locals())
+    newstr = "MongoDB Record ID is"
+    return "{newstr} - [{content}]".format(**locals())
+
+@hug.get('/questionKey')
+def keywordsList(recordID: str):
+    newstr = "MongoDB Record ID is"
+    return "{newstr} - {content}".format(**locals())
 
 # Test: http://localhost:9000/greet/wishes
 @hug.get('/greet/{event}')
