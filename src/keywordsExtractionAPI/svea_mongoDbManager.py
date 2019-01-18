@@ -52,6 +52,7 @@ class svea_mongoDbManager(object):
   def get(self, postId):
     return ObjectId(postId)
 
+  # Update recordd
   def selectByID(self, mongoDbID):
     try:
       # Convert from string to ObjectId:
@@ -62,15 +63,34 @@ class svea_mongoDbManager(object):
       print(ex)
       raise
 
+  def updateByID(self, mongoDbID, newContent):
+    try:
+      # Convert from string to ObjectId:
+      mongoDbIDObj = self.get(mongoDbID)
+      beforeUpdate = self._collection.find_one_and_update({"_id": mongoDbIDObj}, {"$set": {"hlsummary": newContent}})
+      print("***before update")
+      print(beforeUpdate)
+      afterUpdate = self.selectByID(mongoDbIDObj)
+      return afterUpdate
+    except Exception as ex:
+      print(ex)
+      raise
+
 def main(args):
   return 0
 
 if __name__ == '__main__':
+  print("***main")
   # export MONGODB_URI="mongodb://localhost:27017/"
   # export MONGODB_USER="NONE"
   # export MONGODB_PASSWORD="NONE"
   mdbMgr = svea_mongoDbManager(_uriEnvString="MONGODB_URI", _userEnvString="MONGODB_USER", _passwordEnvString="MONGODB_PASSWORD")
-  result = mdbMgr.selectByID(mongoDbID="5c41418c01192e2a003fee29")
+  # Test 1
+  #result = mdbMgr.selectByID(mongoDbID="5c41418c01192e2a003fee29")
+
+  # Test 2
+  result = mdbMgr.updateByID(mongoDbID="5c4095e0dbdd5747c2ddb713", newContent="good morning")
+
   print(result)
-  print("***main")
+
   sys.exit(main(sys.argv))
