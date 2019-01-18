@@ -35,12 +35,12 @@ waitress>=x.x.x,<x.x.x
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz#egg=en_core_web_sm==2.0.0
 
 --------------------------------------------------------
-# svea-xrain-keywordsExtraction
+### svea-xrain-keywordsExtraction
 
 Serve one or more [spaCy models](https://spacy.io/models) and extract syntactic
 dependencies, part-of-speech tags and/or entities.
 
-# https://spacy.io/models/en#en_core_web_sm
+### https://spacy.io/models/en#en_core_web_sm
 $ python -m spacy download en_core_web_sm
 
 ## Installation
@@ -56,7 +56,7 @@ python app.py
 
 [TODO]
 
-#### Example response
+### Example response
 
 ```json
 {
@@ -121,8 +121,11 @@ RETURN a
 ## Init parameters before running svea_neo4jManager.py
 
 $ export NEO4J_USER="neo4j"
+
 $ export NEO4J_PASSWORD="my-password"
+
 $ export NEO4J_URI="bolt://xxx.xxx.xxx.xxx:7687"
+
 $ python svea_neo4jManager.py
 
 ## Install Jupter
